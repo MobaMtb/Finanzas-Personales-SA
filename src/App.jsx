@@ -16,10 +16,11 @@ import {
 } from "lucide-react";
 
 // ───────────────────────── Supabase ─────────────────────────
-export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+// La anon key es pública por diseño (los datos los protege el RLS de Supabase).
+// Si Netlify tiene las variables VITE_*, se usan esas; si no, estas por defecto.
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://rosyujphrgnqbtzezkct.supabase.co";
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvc3l1anBocmducWJ0emV6a2N0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5MzMwNDEsImV4cCI6MjExMDUwOTA0MX0.-ZdnqQDN04I97cVLrKUtGyNM_ZhbQ7GL0G2XuJk-cAk";
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ───────────────────────── Utilidades ─────────────────────────
 const fmt = (n) =>
