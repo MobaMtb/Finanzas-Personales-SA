@@ -31,6 +31,9 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 
+-- Nadie debe poder llamar esta función por la API (solo el trigger)
+revoke execute on function public.handle_new_user() from public, anon, authenticated;
+
 -- ---------- GASTOS OBLIGATORIOS ----------
 create table if not exists public.gastos_fijos (
   id          bigint generated always as identity primary key,
