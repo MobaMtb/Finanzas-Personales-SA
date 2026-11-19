@@ -12,7 +12,7 @@ import {
   LayoutDashboard, Receipt, TrendingUp, Target, Plus, Trash2, Pencil, Check, X,
   Sun, Moon, Circle, CheckCircle2, ArrowUpRight, ArrowDownLeft, ArrowLeftRight,
   Wallet, LogOut, Upload, ChevronLeft, ChevronRight, MoreVertical, Cloud, CloudOff,
-  Loader2, Coins, Copy,
+  Loader2, Copy,
 } from "lucide-react";
 
 // ───────────────────────── Supabase ─────────────────────────
@@ -90,7 +90,7 @@ const FORMS = {
     ],
   },
 };
-const ETIQUETA = { gasto: "Gasto obligatorio", ingreso: "Ingreso", prestamo: "Préstamo", meta: "Meta de ahorro" };
+const ETIQUETA = { gasto: "Gasto fijo", ingreso: "Ingreso", prestamo: "Préstamo", meta: "Meta de ahorro" };
 const TITULO = {
   gasto: (x) => x.nombre,
   ingreso: (x) => x.descripcion || "Ingreso",
@@ -130,60 +130,66 @@ const DETALLE = {
 function tema(dark) {
   return dark
     ? {
-        bg: "#151B31", side: "#19203B", card: "#232C50", card2: "#2A3460", ink: "#E8ECF8", muted: "#7F89AD",
-        line: "#2F3A66", input: "#1B2342", accent: "#3E7BFA", accent2: "#5E93FF",
-        accentSoft: "rgba(62,123,250,.16)", accentGlow: "rgba(62,123,250,.38)",
-        green: "#2BD47D", greenSoft: "rgba(43,212,125,.14)", red: "#FF6B6B", redSoft: "rgba(255,107,107,.14)",
-        amber: "#FFB547", amberSoft: "rgba(255,181,71,.14)", shadow: "0 10px 30px rgba(0,0,0,.35)",
+        bg: "#151E22", side: "#1A2428", card: "#1E2A2F", card2: "#253339", ink: "#E3EAE8", muted: "#8E9EA2",
+        line: "#2B3A40", input: "#182226", accent: "#86AEDA", accent2: "#9DBFE3", onAccent: "#0F1E2B",
+        accentSoft: "rgba(134,174,218,.14)",
+        green: "#72C08F", greenSoft: "rgba(114,192,143,.13)", red: "#E3826F", redSoft: "rgba(227,130,111,.13)",
+        amber: "#D9AE5B", amberSoft: "rgba(217,174,91,.13)",
       }
     : {
-        bg: "#EEF1F8", side: "#FFFFFF", card: "#FFFFFF", card2: "#F2F4FA", ink: "#1C2340", muted: "#7A84A3",
-        line: "#E3E7F2", input: "#F7F8FC", accent: "#3E7BFA", accent2: "#5E93FF",
-        accentSoft: "rgba(62,123,250,.10)", accentGlow: "rgba(62,123,250,.28)",
-        green: "#16B364", greenSoft: "rgba(22,179,100,.10)", red: "#F04848", redSoft: "rgba(240,72,72,.10)",
-        amber: "#E8930C", amberSoft: "rgba(232,147,12,.12)", shadow: "0 8px 24px rgba(30,40,80,.08)",
+        bg: "#F2F4F3", side: "#FBFCFB", card: "#FFFFFF", card2: "#EEF2F1", ink: "#1E2B2F", muted: "#66767A",
+        line: "#DDE4E2", input: "#F8FAF9", accent: "#2E5E8C", accent2: "#3A6D9E", onAccent: "#FFFFFF",
+        accentSoft: "#E5EDF5",
+        green: "#2E8655", greenSoft: "#E3F1E8", red: "#BF4637", redSoft: "#F8E7E3",
+        amber: "#A8731A", amberSoft: "#F6EDDA",
       };
 }
 
 const css = (c) => `
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{margin:0;background:${c.bg};overscroll-behavior-y:none}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;color-scheme:${c.bg === "#F2F4F3" ? "light" : "dark"}}
+body{margin:0;background:${c.bg};overscroll-behavior-y:none;font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid ${c.accent};outline-offset:2px}
 button,a,input,select,textarea,label{touch-action:manipulation}
 button{-webkit-tap-highlight-color:transparent}
 input,select,textarea{font-family:inherit;border:1px solid ${c.line};background:${c.input};border-radius:10px;padding:10px 12px;font-size:16px;color:${c.ink};width:100%;min-width:0}
 input:focus,select:focus,textarea:focus{outline:none;border-color:${c.accent};box-shadow:0 0 0 3px ${c.accentSoft}}
 button{font-family:inherit}
-.card{background:${c.card};border-radius:16px;padding:20px;box-shadow:${c.shadow}}
+.card{background:${c.card};border:1px solid ${c.line};border-radius:14px;padding:20px}
 .lbl{display:flex;flex-direction:column;gap:6px;font-size:12px;color:${c.muted};font-weight:500}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,${c.accent},${c.accent2});color:#fff;border:none;padding:10px 16px;border-radius:999px;font-size:13px;cursor:pointer;font-weight:600;box-shadow:0 6px 18px ${c.accentGlow};white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:${c.accent};color:${c.onAccent};border:1px solid ${c.accent};padding:9px 15px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600;white-space:nowrap}
+.btn:hover{filter:brightness(1.06)}
 .btn:disabled{opacity:.6;cursor:default}
-.btn.ghost{background:${c.card2};color:${c.muted};box-shadow:none;border:1px solid ${c.line}}
-.btn.ghost:hover{color:${c.ink}}
-.btn.danger{background:${c.redSoft};color:${c.red};box-shadow:none}
+.btn.ghost{background:transparent;color:${c.ink};border:1px solid ${c.line}}
+.btn.ghost:hover{background:${c.card2};filter:none}
+.btn.danger{background:transparent;color:${c.red};border-color:${c.line}}
 .icon-btn{background:none;border:none;cursor:pointer;color:${c.muted};padding:7px;border-radius:8px;display:inline-flex;align-items:center}
 .icon-btn:hover{background:${c.card2};color:${c.ink}}
-.titulo{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:${c.muted}}
-.nav{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:13px;color:${c.muted};font-weight:500;border:none;background:none;width:100%;text-align:left}
-.nav.on{color:${c.green};background:${c.card2};font-weight:600}
+.titulo{font-size:15px;font-weight:600;color:${c.ink}}
+.sub{font-size:13px;color:${c.muted}}
+.nav{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:14px;color:${c.muted};font-weight:500;border:none;background:none;width:100%;text-align:left}
+.nav.on{color:${c.accent};background:${c.accentSoft};font-weight:600}
 .nav:hover:not(.on){color:${c.ink}}
-.badge{margin-left:auto;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px}
+.badge{margin-left:auto;font-size:12px;font-weight:600;padding:0 7px;border-radius:6px;line-height:20px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 20px;border-top:1px solid ${c.line};cursor:pointer;transition:background .15s}
 .row:hover{background:${c.card2}}
 .row.sel{background:${c.accentSoft}}
-.kpi{border:none;text-align:left;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:120px;font-family:inherit;transition:transform .15s}
-.kpi:hover{transform:translateY(-2px)}
+.stat{background:none;border:none;text-align:left;cursor:pointer;font-family:inherit;padding:0;color:inherit;display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat:hover .stat-v{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.stat-v{font-size:20px;font-weight:600;letter-spacing:-.01em}
+.stat-l{font-size:13px;color:${c.muted}}
 .pill{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600}
-.recharts-area-curve{filter:drop-shadow(0 8px 6px ${c.accentGlow})}
 .spin{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .shell{display:grid;grid-template-columns:232px minmax(0,1fr) 340px;min-height:100vh}
 .sidebar{display:flex}
 .topbar{display:none}
 .solo-angosto{display:none}
 @media (max-width:1199px){.shell{grid-template-columns:232px minmax(0,1fr)}.rightpanel{display:none}.solo-angosto{display:inline-flex}}
+@media (max-width:420px){.resumen-cifras .stat{padding:14px 12px !important}.stat-v{font-size:17px}}
 @media (max-width:899px){.shell{grid-template-columns:minmax(0,1fr)}.sidebar{display:none}.topbar{display:flex}.main{padding:16px 16px calc(28px + env(safe-area-inset-bottom)) !important}.two-col{grid-template-columns:1fr !important}}
 @media (min-width:1200px){.drawer{display:none !important}}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
 ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:${c.line};border-radius:4px}
 `;
 
@@ -205,7 +211,7 @@ export default function App() {
 function PantallaCarga({ texto = "Cargando…" }) {
   const c = tema(true);
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: c.bg, color: c.muted, fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: c.bg, color: c.muted, fontFamily: "'Figtree', system-ui, sans-serif" }}>
       <style>{css(c)}</style>
       <Loader2 size={18} className="spin" /> {texto}
     </div>
@@ -245,7 +251,7 @@ function Auth() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 16, background: `radial-gradient(circle at 30% 20%, #22306a 0%, ${c.bg} 55%)`, color: c.ink, fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 16, background: c.bg, color: c.ink, fontFamily: "'Figtree', system-ui, sans-serif" }}>
       <style>{css(c)}</style>
       <form onSubmit={enviar} className="card" style={{ width: "100%", maxWidth: 380, padding: 28, display: "flex", flexDirection: "column", gap: 14 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
@@ -273,12 +279,10 @@ function Auth() {
 function Logo({ c }) {
   return (
     <>
-      <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${c.accent}, ${c.accent2})`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 6px 16px ${c.accentGlow}` }}>
-        <Wallet size={18} color="#fff" />
+      <div style={{ width: 32, height: 32, borderRadius: 8, background: c.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Wallet size={17} color={c.onAccent} />
       </div>
-      <div style={{ fontWeight: 800, fontSize: 15, letterSpacing: ".08em", color: c.ink }}>
-        <span style={{ color: c.accent2 }}>F</span>INANZAS
-      </div>
+      <div style={{ fontWeight: 700, fontSize: 17, color: c.ink }}>Finanzas</div>
     </>
   );
 }
@@ -286,7 +290,7 @@ function Logo({ c }) {
 // ───────────────────────── App principal ─────────────────────────
 const NAV = [
   { key: "resumen", label: "Panel", icon: LayoutDashboard },
-  { key: "fijos", label: "Gastos obligatorios", icon: Receipt },
+  { key: "fijos", label: "Gastos fijos", icon: Receipt },
   { key: "ingresos", label: "Ingresos", icon: TrendingUp },
   { key: "prestamos", label: "Préstamos", icon: ArrowLeftRight },
   { key: "metas", label: "Metas", icon: Target },
@@ -473,16 +477,16 @@ function Finanzas({ user }) {
   const iniciales = iniDe(perfil?.nombre || user.email);
 
   return (
-    <div style={{ minHeight: "100vh", background: c.bg, color: c.ink, fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: c.bg, color: c.ink, fontFamily: "'Figtree', system-ui, sans-serif" }}>
       <style>{css(c)}</style>
 
       {/* ── Barra superior móvil (arriba para que nada flotante la tape) ── */}
-      <nav className="topbar" style={{ position: "sticky", top: 0, zIndex: 30, background: c.side, borderBottom: `1px solid ${c.line}`, padding: "calc(6px + env(safe-area-inset-top)) 4px 6px", justifyContent: "space-around", boxShadow: c.shadow }}>
+      <nav className="topbar" style={{ position: "sticky", top: 0, zIndex: 30, background: c.side, borderBottom: `1px solid ${c.line}`, padding: "calc(6px + env(safe-area-inset-top)) 4px 6px", justifyContent: "space-around" }}>
         {NAV.map(({ key, label, icon: Icon }) => {
           const on = tab === key;
           return (
             <button key={key} onClick={() => { setTab(key); window.scrollTo({ top: 0 }); }} aria-current={on ? "page" : undefined}
-              style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 3, background: on ? c.card2 : "none", border: "none", borderRadius: 10, color: on ? c.green : c.muted, fontSize: 10.5, cursor: "pointer", padding: "7px 2px", fontWeight: on ? 600 : 500, minWidth: 0 }}>
+              style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 3, background: on ? c.accentSoft : "none", border: "none", borderRadius: 10, color: on ? c.accent : c.muted, fontSize: 11, cursor: "pointer", padding: "7px 2px", fontWeight: on ? 600 : 500, minWidth: 0 }}>
               <Icon size={19} />
               {label.split(" ")[0]}
             </button>
@@ -494,8 +498,7 @@ function Finanzas({ user }) {
         {/* ── Sidebar ── */}
         <aside className="sidebar" style={{ flexDirection: "column", background: c.side, padding: "26px 16px", position: "sticky", top: 0, height: "100vh", borderRight: `1px solid ${c.line}` }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 8px 30px" }}><Logo c={c} /></div>
-          <div className="titulo" style={{ fontSize: 10, padding: "0 14px 10px" }}>Principal</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {NAV.map(({ key, label, icon: Icon }) => (
               <button key={key} className={`nav ${tab === key ? "on" : ""}`} onClick={() => setTab(key)}>
                 <Icon size={17} /> {label}
@@ -514,16 +517,15 @@ function Finanzas({ user }) {
         <main className="main" style={{ padding: "26px 30px", minWidth: 0 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 22 }}>
             <div>
-              <div className="titulo" style={{ fontSize: 14, color: c.ink }}>{tab === "resumen" ? "Resumen" : tituloTab}</div>
-              <div style={{ fontSize: 13, color: c.muted, marginTop: 4 }}>Hola, {perfil?.nombre || "tú"} 👋</div>
+              <h1 style={{ fontSize: 24, fontWeight: 700, margin: 0, letterSpacing: "-.01em" }}>{tab === "resumen" ? "Hola, " + ((perfil?.nombre || "").split(" ")[0] || "tú") : tituloTab}</h1>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ display: "flex", alignItems: "center", background: c.card, borderRadius: 999, boxShadow: c.shadow }}>
+              <div style={{ display: "flex", alignItems: "center", background: c.card, border: `1px solid ${c.line}`, borderRadius: 10 }}>
                 <button className="icon-btn" onClick={() => setMes(addMes(mes, -1))} aria-label="Mes anterior"><ChevronLeft size={16} /></button>
-                <span style={{ fontSize: 13, fontWeight: 600, minWidth: 128, textAlign: "center" }}>{mesLabel(mes)}</span>
+                <span style={{ fontSize: 14, fontWeight: 600, minWidth: 132, textAlign: "center" }}>{mesLabel(mes)}</span>
                 <button className="icon-btn" onClick={() => setMes(addMes(mes, 1))} aria-label="Mes siguiente"><ChevronRight size={16} /></button>
               </div>
-              <button className="solo-angosto" onClick={() => { setSel(null); setDrawer(true); }} style={{ width: 38, height: 38, borderRadius: "50%", border: "none", cursor: "pointer", background: `linear-gradient(135deg, ${c.accent}, ${c.accent2})`, color: "#fff", fontWeight: 700, fontSize: 13, alignItems: "center", justifyContent: "center" }}>
+              <button className="solo-angosto" onClick={() => { setSel(null); setDrawer(true); }} style={{ width: 38, height: 38, borderRadius: "50%", border: "none", cursor: "pointer", background: c.accentSoft, color: c.accent, fontWeight: 700, fontSize: 13, alignItems: "center", justifyContent: "center" }}>
                 {iniciales}
               </button>
             </div>
@@ -532,7 +534,8 @@ function Finanzas({ user }) {
           {tab === "resumen" && (
             <Resumen c={c} setModal={setModal} setTab={setTab} seleccionar={seleccionar}
               ingresosMes={ingresosMes} disponible={disponible} pendiente={pendiente} porCobrar={porCobrar}
-              ahorro={ahorro} pagado={pagado} totalMes={totalMes} serie={serie} metas={d.metas} />
+              ahorro={ahorro} pagado={pagado} totalMes={totalMes} serie={serie} metas={d.metas}
+              gastos={d.gastos} pagosMes={pagosMes} onToggle={acciones.togglePago} mesTxt={mesLabel(mes).split(" ")[0]} />
           )}
           {tab === "fijos" && (
             <GastosTab c={c} gastos={d.gastos} pagosMes={pagosMes} mesTxt={mesLabel(mes)} pagado={pagado} pendiente={pendiente} totalMes={totalMes}
@@ -566,7 +569,7 @@ function Finanzas({ user }) {
 
       {/* ── Modales ── */}
       {modal && modal !== "importar" && (
-        <Modal c={c} titulo={"Nuevo: " + ETIQUETA[modal].toLowerCase()} onClose={() => setModal(null)}>
+        <Modal c={c} titulo={{ gasto: "Nuevo gasto fijo", ingreso: "Nuevo ingreso", prestamo: "Nuevo préstamo", meta: "Nueva meta" }[modal]} onClose={() => setModal(null)}>
           <FormRegistro c={c} tipo={modal} onCancel={() => setModal(null)}
             onSubmit={async (payload) => { if (await acciones.crear(modal, payload)) setModal(null); }} />
         </Modal>
@@ -590,19 +593,16 @@ function EstadoSync({ c, sync, errMsg }) {
 }
 
 // ───────────────────────── Componentes visuales ─────────────────────────
-function Kpi({ c, valor, label, icon: Icon, color, destacado, onClick }) {
+function Cifras({ c, items }) {
   return (
-    <button className="kpi" onClick={onClick} style={{
-      background: destacado ? `linear-gradient(135deg, ${c.accent}, ${c.accent2})` : c.card,
-      color: destacado ? "#fff" : c.ink,
-      boxShadow: destacado ? `0 14px 32px ${c.accentGlow}` : c.shadow,
-    }}>
-      <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.5px", color: destacado ? "#fff" : color || c.ink }}>{valor}</div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 8 }}>
-        <span style={{ fontSize: 12, color: destacado ? "rgba(255,255,255,.85)" : c.muted }}>{label}</span>
-        <Icon size={18} color={destacado ? "#fff" : c.muted} />
-      </div>
-    </button>
+    <section className="card resumen-cifras" style={{ display: "grid", gridTemplateColumns: `repeat(${items.length}, minmax(0,1fr))`, padding: 0 }}>
+      {items.map((x, k) => (
+        <div key={x.l} className="stat" style={{ padding: "16px 18px", borderLeft: k ? `1px solid ${c.line}` : "none", cursor: "default" }}>
+          <span className="stat-l">{x.l}</span>
+          <span className="stat-v" style={{ color: x.col || c.ink }}>{x.v}</span>
+        </div>
+      ))}
+    </section>
   );
 }
 
@@ -616,35 +616,15 @@ function Ring({ c, pct, size = 96, stroke = 7, color, children }) {
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={c.card2} strokeWidth={stroke} />
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round"
           strokeDasharray={C} strokeDashoffset={C * (1 - p / 100)}
-          style={{ transition: "stroke-dashoffset .6s", filter: `drop-shadow(0 0 5px ${color})` }} />
+          style={{ transition: "stroke-dashoffset .6s" }} />
       </svg>
       <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>{children}</div>
     </div>
   );
 }
 
-function Gauge({ c, pct, size = 190 }) {
-  const stroke = 12;
-  const r = (size - stroke) / 2;
-  const cy = size / 2;
-  const arco = `M ${stroke / 2} ${cy} A ${r} ${r} 0 0 1 ${size - stroke / 2} ${cy}`;
-  const L = Math.PI * r;
-  const p = Math.max(0, Math.min(100, pct || 0));
-  return (
-    <div style={{ position: "relative", width: size, height: size / 2 + stroke }}>
-      <svg width={size} height={size / 2 + stroke}>
-        <path d={arco} fill="none" stroke={c.card2} strokeWidth={stroke} strokeLinecap="round" />
-        <path d={arco} fill="none" stroke={c.accent} strokeWidth={stroke} strokeLinecap="round"
-          strokeDasharray={L} strokeDashoffset={L * (1 - p / 100)}
-          style={{ transition: "stroke-dashoffset .6s", filter: `drop-shadow(0 0 6px ${c.accentGlow})` }} />
-      </svg>
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 2, textAlign: "center", fontSize: 26, fontWeight: 700 }}>{Math.round(p)}%</div>
-    </div>
-  );
-}
-
 function Leyenda({ c, color, texto }) {
-  return <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: c.muted }}><span style={{ width: 9, height: 9, borderRadius: "50%", border: `2px solid ${color}` }} />{texto}</span>;
+  return <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: c.muted }}><span style={{ width: 10, height: 3, borderRadius: 2, background: color }} />{texto}</span>;
 }
 
 function Vacio({ c, texto }) {
@@ -745,7 +725,7 @@ function Panel({ c, perfil, user, sel, item, ctx, acciones, onSel, onClose, reci
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       {/* Perfil */}
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ width: 42, height: 42, borderRadius: "50%", background: `linear-gradient(135deg, ${c.accent}, ${c.accent2})`, color: "#fff", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+        <div style={{ width: 42, height: 42, borderRadius: "50%", background: c.accentSoft, color: c.accent, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
           {iniDe(perfil?.nombre || user.email)}
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -780,8 +760,8 @@ function Panel({ c, perfil, user, sel, item, ctx, acciones, onSel, onClose, reci
         <div className="card" style={{ padding: 22 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
             <div style={{ minWidth: 0 }}>
-              <div className="titulo" style={{ fontSize: 10 }}>{ETIQUETA[sel.tipo]}</div>
-              <div style={{ fontSize: 22, fontWeight: 700, marginTop: 6, wordBreak: "break-word" }}>{TITULO[sel.tipo](item)}</div>
+              <div className="sub">{ETIQUETA[sel.tipo]}</div>
+              <div style={{ fontSize: 22, fontWeight: 700, marginTop: 4, wordBreak: "break-word" }}>{TITULO[sel.tipo](item)}</div>
             </div>
             <div style={{ display: "flex" }}>
               <button className="icon-btn" onClick={() => setEditando(!editando)} aria-label="Editar"><Pencil size={15} /></button>
@@ -799,8 +779,8 @@ function Panel({ c, perfil, user, sel, item, ctx, acciones, onSel, onClose, reci
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px 12px", marginTop: 22 }}>
                 {DETALLE[sel.tipo](item, ctx).map(([l, val]) => (
                   <div key={l}>
-                    <div style={{ fontSize: 11, color: c.muted, fontWeight: 600 }}>{l}</div>
-                    <div style={{ fontSize: 14, color: c.accent2, marginTop: 5, fontWeight: 500 }}>{val}</div>
+                    <div style={{ fontSize: 12, color: c.muted }}>{l}</div>
+                    <div style={{ fontSize: 15, color: c.ink, marginTop: 4, fontWeight: 600 }}>{val}</div>
                   </div>
                 ))}
               </div>
@@ -834,7 +814,7 @@ function Panel({ c, perfil, user, sel, item, ctx, acciones, onSel, onClose, reci
         </div>
       ) : (
         <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-          <div className="titulo" style={{ padding: "18px 20px 12px", fontSize: 11 }}>Actividad reciente</div>
+          <div className="titulo" style={{ padding: "18px 20px 12px" }}>Últimos movimientos</div>
           {recientes.length === 0 ? <Vacio c={c} texto="Todavía no hay movimientos." /> : recientes.map((r) => (
             <div key={r.tipo + r.id} className="row" style={{ padding: "12px 20px" }} onClick={() => onSel(r.tipo, r.id)}>
               <div style={{ minWidth: 0 }}>
@@ -847,7 +827,7 @@ function Panel({ c, perfil, user, sel, item, ctx, acciones, onSel, onClose, reci
             </div>
           ))}
           <div style={{ padding: "12px 20px 16px", fontSize: 11, color: c.muted, borderTop: `1px solid ${c.line}` }}>
-            Toca cualquier registro para ver su detalle aquí.
+            Toca un registro para ver el detalle, editarlo o borrarlo.
           </div>
         </div>
       )}
@@ -856,100 +836,131 @@ function Panel({ c, perfil, user, sel, item, ctx, acciones, onSel, onClose, reci
 }
 
 // ───────────────────────── Pestañas ─────────────────────────
-function Resumen({ c, setModal, setTab, seleccionar, ingresosMes, disponible, pendiente, porCobrar, ahorro, pagado, totalMes, serie, metas }) {
-  const acciones = [
-    { tipo: "ingreso", t: "Ingreso", main: true },
-    { tipo: "gasto", t: "Gasto obligatorio" },
-    { tipo: "prestamo", t: "Préstamo" },
-    { tipo: "meta", t: "Meta" },
-  ];
-  const pctPagado = totalMes > 0 ? (pagado / totalMes) * 100 : 0;
+function Resumen({ c, setModal, setTab, seleccionar, ingresosMes, disponible, pendiente, porCobrar, ahorro, pagado, totalMes, serie, metas, gastos, pagosMes, onToggle, mesTxt }) {
+  const pctPagado = totalMes > 0 ? Math.round((pagado / totalMes) * 100) : 0;
+  const porPagar = gastos.filter((g) => !pagosMes.has(g.id));
   const metasTop = metas.slice(0, 3);
+  const negativo = disponible < 0;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-        {acciones.map((a) => (
-          <button key={a.tipo} className={`btn ${a.main ? "" : "ghost"}`} onClick={() => setModal(a.tipo)}>
-            <Plus size={14} /> {a.t}
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {/* Lo principal: cuánto queda */}
+      <section className="card" style={{ padding: "22px 22px 20px" }}>
+        <div style={{ fontSize: 15, color: c.muted }}>{negativo ? "Te faltan" : "Te quedan"} en {mesTxt.toLowerCase()}</div>
+        <div style={{ fontSize: "clamp(38px, 9vw, 52px)", fontWeight: 700, letterSpacing: "-.025em", lineHeight: 1.05, margin: "6px 0 10px", color: negativo ? c.red : c.ink }}>
+          {fmt(Math.abs(disponible))}
+        </div>
+        <div style={{ fontSize: 14, color: c.muted, lineHeight: 1.5 }}>
+          Entraron <b style={{ color: c.green, fontWeight: 600 }}>{fmt(ingresosMes)}</b> y tus gastos fijos del mes suman <b style={{ color: c.ink, fontWeight: 600 }}>{fmt(totalMes)}</b>.
+        </div>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 18 }}>
+          <button className="btn" onClick={() => setModal("ingreso")}><Plus size={15} /> Ingreso</button>
+          <button className="btn ghost" onClick={() => setModal("gasto")}><Plus size={15} /> Gasto fijo</button>
+          <button className="btn ghost" onClick={() => setModal("prestamo")}><Plus size={15} /> Préstamo</button>
+          <button className="btn ghost" onClick={() => setModal("meta")}><Plus size={15} /> Meta</button>
+        </div>
+      </section>
+
+      {/* Tres cifras secundarias en una sola franja */}
+      <section className="card resumen-cifras" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0,1fr))", padding: 0 }}>
+        {[
+          { v: pendiente, l: "Por pagar", col: pendiente > 0 ? c.red : c.ink, t: "fijos" },
+          { v: porCobrar, l: "Te deben", col: c.amber, t: "prestamos" },
+          { v: ahorro, l: "Ahorrado", col: c.ink, t: "metas" },
+        ].map((x, k) => (
+          <button key={x.l} className="stat" onClick={() => setTab(x.t)} style={{ padding: "16px 18px", borderLeft: k ? `1px solid ${c.line}` : "none" }}>
+            <span className="stat-l">{x.l}</span>
+            <span className="stat-v" style={{ color: x.col }}>{fmt(x.v)}</span>
           </button>
         ))}
-      </div>
+      </section>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 14 }}>
-        <Kpi c={c} valor={fmt(ingresosMes)} label="Ingresos del mes" icon={TrendingUp} color={c.green} onClick={() => setTab("ingresos")} />
-        <Kpi c={c} destacado valor={fmt(disponible)} label="Disponible tras fijos" icon={Coins} onClick={() => setTab("fijos")} />
-        <Kpi c={c} valor={fmt(pendiente)} label="Pendiente por pagar" icon={Receipt} color={pendiente > 0 ? c.red : c.ink} onClick={() => setTab("fijos")} />
-        <Kpi c={c} valor={fmt(porCobrar)} label="Por cobrar" icon={ArrowLeftRight} color={c.amber} onClick={() => setTab("prestamos")} />
-      </div>
-
-      <div className="card">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10, marginBottom: 14 }}>
-          <div className="titulo">Flujo · últimos 6 meses</div>
-          <div style={{ display: "flex", gap: 14 }}>
-            <Leyenda c={c} color={c.green} texto="Ingresos" />
-            <Leyenda c={c} color={c.accent2} texto="Gastos pagados" />
+      <div className="two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        {/* Por pagar este mes: accionable */}
+        <section className="card" style={{ padding: 0, overflow: "hidden" }}>
+          <div style={{ padding: "18px 20px 12px" }}>
+            <div className="titulo">Por pagar este mes</div>
+            <div style={{ height: 6, background: c.card2, borderRadius: 3, margin: "12px 0 6px", overflow: "hidden" }}>
+              <div style={{ width: pctPagado + "%", height: "100%", background: c.green, borderRadius: 3, transition: "width .4s" }} />
+            </div>
+            <div className="sub">Llevas pagado {fmt(pagado)} de {fmt(totalMes)} ({pctPagado}%)</div>
           </div>
-        </div>
-        <ResponsiveContainer width="100%" height={240}>
-          <AreaChart data={serie} margin={{ left: -10, right: 8, top: 10 }}>
-            <defs>
-              <linearGradient id="gIng" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={c.green} stopOpacity={0.35} />
-                <stop offset="100%" stopColor={c.green} stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="gGas" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={c.accent2} stopOpacity={0.4} />
-                <stop offset="100%" stopColor={c.accent2} stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid vertical={false} stroke={c.line} strokeDasharray="3 6" />
-            <XAxis dataKey="mes" tick={{ fontSize: 12, fill: c.muted }} axisLine={false} tickLine={false} />
-            <YAxis tickFormatter={fmtShort} tick={{ fontSize: 11, fill: c.muted }} axisLine={false} tickLine={false} width={56} />
-            <Tooltip formatter={(v, n) => [fmt(v), n === "ingresos" ? "Ingresos" : "Gastos pagados"]}
-              contentStyle={{ fontFamily: "Inter", fontSize: 12, borderRadius: 10, border: "none", background: c.card2, color: c.ink, boxShadow: c.shadow }}
-              labelStyle={{ color: c.muted }} cursor={{ stroke: c.line }} />
-            <Area type="monotone" dataKey="ingresos" stroke={c.green} strokeWidth={2.5} fill="url(#gIng)" dot={false} activeDot={{ r: 5, fill: "#fff", stroke: c.green, strokeWidth: 2 }} />
-            <Area type="monotone" dataKey="gastos" stroke={c.accent2} strokeWidth={2.5} fill="url(#gGas)" dot={false} activeDot={{ r: 5, fill: "#fff", stroke: c.accent2, strokeWidth: 2 }} />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+          {porPagar.length === 0 ? (
+            <div style={{ padding: "14px 20px 20px", borderTop: `1px solid ${c.line}`, fontSize: 14, color: gastos.length ? c.green : c.muted }}>
+              {gastos.length ? "Todo pagado este mes." : "Agrega tus gastos fijos para llevar la cuenta."}
+            </div>
+          ) : porPagar.slice(0, 5).map((g) => (
+            <div key={g.id} className="row" onClick={() => seleccionar("gasto", g.id)} style={{ padding: "11px 20px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+                <button className="icon-btn" style={{ padding: 2 }} onClick={(e) => { e.stopPropagation(); onToggle(g); }} aria-label={"Marcar " + g.nombre + " como pagado"}>
+                  <Circle size={20} />
+                </button>
+                <span style={{ fontSize: 14, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{g.nombre}</span>
+              </div>
+              <span style={{ fontSize: 14, fontWeight: 600, whiteSpace: "nowrap" }}>{fmt(mensual(g))}</span>
+            </div>
+          ))}
+          {porPagar.length > 5 && (
+            <button className="icon-btn" style={{ margin: "4px 12px 12px", fontSize: 13 }} onClick={() => setTab("fijos")}>Ver los {porPagar.length}</button>
+          )}
+        </section>
 
-      <div className="two-col" style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 16 }}>
-        <div className="card">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-            <div className="titulo">Metas · {fmt(ahorro)} ahorrado</div>
-            <button className="icon-btn" style={{ fontSize: 12 }} onClick={() => setTab("metas")}>Ver todas</button>
+        {/* Metas */}
+        <section className="card">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <div className="titulo">Metas de ahorro</div>
+            <button className="icon-btn" style={{ fontSize: 13 }} onClick={() => setTab("metas")}>Ver todas</button>
           </div>
           {metasTop.length === 0 ? (
-            <div style={{ color: c.muted, fontSize: 14 }}>Sin metas todavía.</div>
+            <div style={{ color: c.muted, fontSize: 14 }}>Crea una meta para ver cuánto te falta.</div>
           ) : (
-            <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap", gap: 16 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {metasTop.map((m) => {
-                const pct = (m.monto_actual / m.monto_objetivo) * 100;
+                const pct = Math.min(100, Math.round((m.monto_actual / m.monto_objetivo) * 100));
                 const ok = pct >= 100;
                 return (
-                  <button key={m.id} onClick={() => seleccionar("meta", m.id)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 10, color: c.ink, maxWidth: 110 }}>
-                    <Ring c={c} pct={pct} color={ok ? c.green : c.accent2}>
-                      <span style={{ fontSize: 18, fontWeight: 700 }}>{Math.min(100, Math.round(pct))}%</span>
-                    </Ring>
-                    <span style={{ fontSize: 12, color: c.muted, textAlign: "center", wordBreak: "break-word" }}>{m.nombre}</span>
+                  <button key={m.id} onClick={() => seleccionar("meta", m.id)} className="stat" style={{ gap: 6 }}>
+                    <span style={{ display: "flex", justifyContent: "space-between", gap: 8, fontSize: 14 }}>
+                      <span style={{ fontWeight: 600 }}>{m.nombre}</span>
+                      <span style={{ color: ok ? c.green : c.muted }}>{ok ? "Cumplida" : pct + "%"}</span>
+                    </span>
+                    <span style={{ display: "block", height: 6, background: c.card2, borderRadius: 3, overflow: "hidden" }}>
+                      <span style={{ display: "block", width: pct + "%", height: "100%", background: ok ? c.green : c.accent, borderRadius: 3 }} />
+                    </span>
+                    <span className="sub">{fmt(m.monto_actual)} de {fmt(m.monto_objetivo)}</span>
                   </button>
                 );
               })}
             </div>
           )}
-        </div>
+        </section>
+      </div>
 
-        <div className="card" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <div className="titulo" style={{ alignSelf: "flex-start", marginBottom: 18 }}>Gastos del mes</div>
-          <Gauge c={c} pct={pctPagado} />
-          <div style={{ display: "flex", gap: 16, marginTop: 16, flexWrap: "wrap", justifyContent: "center" }}>
-            <Leyenda c={c} color={c.accent2} texto={"Pagado " + fmt(pagado)} />
-            <Leyenda c={c} color={c.red} texto={"Pendiente " + fmt(pendiente)} />
+      {/* Historial */}
+      <section className="card">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 10, marginBottom: 12 }}>
+          <div>
+            <div className="titulo">Ingresos y gastos pagados</div>
+            <div className="sub" style={{ marginTop: 2 }}>Últimos 6 meses</div>
+          </div>
+          <div style={{ display: "flex", gap: 14 }}>
+            <Leyenda c={c} color={c.green} texto="Ingresos" />
+            <Leyenda c={c} color={c.red} texto="Gastos" />
           </div>
         </div>
-      </div>
+        <ResponsiveContainer width="100%" height={220}>
+          <AreaChart data={serie} margin={{ left: -10, right: 8, top: 8 }}>
+            <CartesianGrid vertical={false} stroke={c.line} />
+            <XAxis dataKey="mes" tick={{ fontSize: 12, fill: c.muted }} axisLine={false} tickLine={false} />
+            <YAxis tickFormatter={fmtShort} tick={{ fontSize: 12, fill: c.muted }} axisLine={false} tickLine={false} width={56} />
+            <Tooltip formatter={(v, n) => [fmt(v), n === "ingresos" ? "Ingresos" : "Gastos pagados"]}
+              contentStyle={{ fontFamily: "Figtree", fontSize: 13, borderRadius: 10, border: `1px solid ${c.line}`, background: c.card, color: c.ink }}
+              labelStyle={{ color: c.muted }} cursor={{ stroke: c.line }} />
+            <Area type="monotone" dataKey="ingresos" stroke={c.green} strokeWidth={2} fill={c.green} fillOpacity={0.08} dot={false} activeDot={{ r: 4, fill: c.card, stroke: c.green, strokeWidth: 2 }} />
+            <Area type="monotone" dataKey="gastos" stroke={c.red} strokeWidth={2} fill={c.red} fillOpacity={0.06} dot={false} activeDot={{ r: 4, fill: c.card, stroke: c.red, strokeWidth: 2 }} />
+          </AreaChart>
+        </ResponsiveContainer>
+      </section>
     </div>
   );
 }
@@ -969,13 +980,9 @@ function CabeceraLista({ c, titulo, onAdd, extra }) {
 function GastosTab({ c, gastos, pagosMes, mesTxt, pagado, pendiente, totalMes, onToggle, onSel, sel, onAdd }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 14 }}>
-        <Kpi c={c} destacado valor={fmt(totalMes)} label={"Total " + mesTxt} icon={Receipt} />
-        <Kpi c={c} valor={fmt(pagado)} label="Pagado" icon={CheckCircle2} color={c.green} />
-        <Kpi c={c} valor={fmt(pendiente)} label="Pendiente" icon={Circle} color={pendiente > 0 ? c.red : c.ink} />
-      </div>
+      <Cifras c={c} items={[{ l: "Total del mes", v: fmt(totalMes) }, { l: "Pagado", v: fmt(pagado), col: c.green }, { l: "Por pagar", v: fmt(pendiente), col: pendiente > 0 ? c.red : c.ink }]} />
       <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-        <CabeceraLista c={c} titulo={"Gastos obligatorios · " + mesTxt} onAdd={onAdd} />
+        <CabeceraLista c={c} titulo={"Gastos de " + mesTxt.toLowerCase()} onAdd={onAdd} />
         {gastos.length === 0 ? <Vacio c={c} texto="Sin gastos obligatorios todavía." /> : gastos.map((g) => {
           const ok = pagosMes.has(g.id);
           return (
@@ -987,7 +994,7 @@ function GastosTab({ c, gastos, pagosMes, mesTxt, pagado, pendiente, totalMes, o
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontSize: 14, fontWeight: 500, textDecoration: ok ? "line-through" : "none", color: ok ? c.muted : c.ink }}>{g.nombre}</div>
                   <div style={{ display: "flex", gap: 6, marginTop: 4, flexWrap: "wrap" }}>
-                    <span className="pill" style={{ background: c.accentSoft, color: c.accent2 }}>{g.frecuencia}</span>
+                    <span className="pill" style={{ background: c.card2, color: c.muted }}>{g.frecuencia}</span>
                     {g.frecuencia !== "Mensual" && <span style={{ fontSize: 11, color: c.muted }}>{fmt(mensual(g))}/mes</span>}
                   </div>
                 </div>
@@ -1007,10 +1014,7 @@ function IngresosTab({ c, ingresos, mes, onSel, sel, onAdd }) {
   const total = sum(lista.map((i) => i.monto));
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 14 }}>
-        <Kpi c={c} destacado valor={fmt(total)} label={todos ? "Total histórico" : "Total " + mesLabel(mes)} icon={TrendingUp} />
-        <Kpi c={c} valor={String(lista.length)} label="Registros" icon={ArrowUpRight} color={c.green} />
-      </div>
+      <Cifras c={c} items={[{ l: todos ? "Total histórico" : "Total del mes", v: fmt(total), col: c.green }, { l: "Registros", v: String(lista.length) }]} />
       <div className="card" style={{ padding: 0, overflow: "hidden" }}>
         <CabeceraLista c={c} titulo="Ingresos" onAdd={onAdd} extra={
           <button className="btn ghost" style={{ padding: "8px 12px" }} onClick={() => setTodos(!todos)}>{todos ? "Solo este mes" : "Ver todos"}</button>
@@ -1040,10 +1044,7 @@ function PrestamosTab({ c, prestamos, onToggle, onSel, sel, onAdd }) {
   const ordenados = [...prestamos].sort((a, b) => (a.devuelto === b.devuelto ? b.fecha.localeCompare(a.fecha) : a.devuelto ? 1 : -1));
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 14 }}>
-        <Kpi c={c} destacado valor={fmt(porCobrar)} label="Por cobrar" icon={ArrowUpRight} />
-        <Kpi c={c} valor={fmt(devuelto)} label="Ya devuelto" icon={ArrowDownLeft} color={c.green} />
-      </div>
+      <Cifras c={c} items={[{ l: "Te deben", v: fmt(porCobrar), col: c.amber }, { l: "Ya devuelto", v: fmt(devuelto), col: c.green }]} />
       <div className="card" style={{ padding: 0, overflow: "hidden" }}>
         <CabeceraLista c={c} titulo="Préstamos" onAdd={onAdd} />
         {ordenados.length === 0 ? <Vacio c={c} texto="Sin préstamos registrados." /> : ordenados.map((p) => (
@@ -1055,7 +1056,7 @@ function PrestamosTab({ c, prestamos, onToggle, onSel, sel, onAdd }) {
               <div style={{ minWidth: 0 }}>
                 <div style={{ fontSize: 14, fontWeight: 600 }}>{p.a_quien}</div>
                 <div style={{ fontSize: 12, color: c.muted }}>
-                  {fechaCL(p.fecha)}{p.devuelto && p.fecha_devolucion ? ` · devuelto ${fechaCL(p.fecha_devolucion)}` : ""}
+                  {fechaCL(p.fecha)}{p.devuelto && p.fecha_devolucion ? `, devuelto el ${fechaCL(p.fecha_devolucion)}` : ""}
                 </div>
               </div>
             </div>
@@ -1096,7 +1097,7 @@ function MetasTab({ c, metas, onAportar, onSel, sel, onAdd }) {
             return (
               <div key={m.id} className="card" onClick={() => onSel("meta", m.id)} style={{ cursor: "pointer", outline: activa ? `2px solid ${c.accent}` : "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
                 <div style={{ fontWeight: 700, fontSize: 15, alignSelf: "flex-start" }}>{m.nombre}</div>
-                <Ring c={c} pct={pct} size={120} stroke={9} color={ok ? c.green : c.accent2}>
+                <Ring c={c} pct={pct} size={108} stroke={8} color={ok ? c.green : c.accent2}>
                   <span style={{ fontSize: 22, fontWeight: 700 }}>{Math.min(100, Math.round(pct))}%</span>
                   <span style={{ fontSize: 10, color: c.muted }}>{ok ? "cumplida" : "avance"}</span>
                 </Ring>
