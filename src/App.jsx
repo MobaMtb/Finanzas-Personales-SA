@@ -130,17 +130,17 @@ const DETALLE = {
 function tema(dark) {
   return dark
     ? {
-        // Base: #11676A (relleno de botones, logo y selección). Texto de acento en un turquesa más claro para que se lea.
-        bg: "#0B2123", side: "#0E2729", card: "#112E30", card2: "#173B3D", ink: "#E3EFEE", muted: "#8DAFAD",
-        line: "#1E4547", input: "#0D2628", fill: "#11676A", accent: "#62BDB8", accent2: "#7CCAC5", onAccent: "#FFFFFF",
-        accentSoft: "rgba(17,103,106,.38)",
-        green: "#9ACD7E", greenSoft: "rgba(154,205,126,.13)", red: "#EE8A78", redSoft: "rgba(238,138,120,.14)",
-        amber: "#E2B661", amberSoft: "rgba(226,182,97,.14)",
+        // Fondo #11676A; tarjetas oscuras con sombra para que resalten; botones menta para contrastar con ambos.
+        bg: "#11676A", side: "#0C4F52", card: "#0A3537", card2: "#114446", ink: "#EAF4F3", muted: "#9FC2C0",
+        line: "#1A4F51", input: "#082C2E", fill: "#8ED6CF", accent: "#8ED6CF", accent2: "#A9E2DC", onAccent: "#062B2C",
+        accentSoft: "rgba(142,214,207,.16)", shadow: "0 8px 22px rgba(2,32,34,.38), 0 1px 0 rgba(255,255,255,.04) inset",
+        green: "#A6D98A", greenSoft: "rgba(166,217,138,.14)", red: "#F29A88", redSoft: "rgba(242,154,136,.15)",
+        amber: "#EBC172", amberSoft: "rgba(235,193,114,.15)",
       }
     : {
         bg: "#F2F4F3", side: "#FBFCFB", card: "#FFFFFF", card2: "#EEF2F1", ink: "#1E2B2F", muted: "#66767A",
         line: "#DDE4E2", input: "#F8FAF9", fill: "#2E5E8C", accent: "#2E5E8C", accent2: "#3A6D9E", onAccent: "#FFFFFF",
-        accentSoft: "#E5EDF5",
+        accentSoft: "#E5EDF5", shadow: "0 1px 2px rgba(20,40,40,.05)",
         green: "#2E8655", greenSoft: "#E3F1E8", red: "#BF4637", redSoft: "#F8E7E3",
         amber: "#A8731A", amberSoft: "#F6EDDA",
       };
@@ -157,7 +157,7 @@ button{-webkit-tap-highlight-color:transparent}
 input,select,textarea{font-family:inherit;border:1px solid ${c.line};background:${c.input};border-radius:10px;padding:10px 12px;font-size:16px;color:${c.ink};width:100%;min-width:0}
 input:focus,select:focus,textarea:focus{outline:none;border-color:${c.accent};box-shadow:0 0 0 3px ${c.accentSoft}}
 button{font-family:inherit}
-.card{background:${c.card};border:1px solid ${c.line};border-radius:14px;padding:20px}
+.card{background:${c.card};border:1px solid ${c.line};border-radius:14px;padding:20px;box-shadow:${c.shadow}}
 .lbl{display:flex;flex-direction:column;gap:6px;font-size:12px;color:${c.muted};font-weight:500}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:${c.fill};color:${c.onAccent};border:1px solid ${c.fill};padding:9px 15px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600;white-space:nowrap}
 .btn:hover{filter:brightness(1.06)}
