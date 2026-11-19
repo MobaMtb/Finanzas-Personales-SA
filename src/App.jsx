@@ -130,15 +130,16 @@ const DETALLE = {
 function tema(dark) {
   return dark
     ? {
-        bg: "#151E22", side: "#1A2428", card: "#1E2A2F", card2: "#253339", ink: "#E3EAE8", muted: "#8E9EA2",
-        line: "#2B3A40", input: "#182226", accent: "#86AEDA", accent2: "#9DBFE3", onAccent: "#0F1E2B",
-        accentSoft: "rgba(134,174,218,.14)",
-        green: "#72C08F", greenSoft: "rgba(114,192,143,.13)", red: "#E3826F", redSoft: "rgba(227,130,111,.13)",
-        amber: "#D9AE5B", amberSoft: "rgba(217,174,91,.13)",
+        // Base: #11676A (relleno de botones, logo y selección). Texto de acento en un turquesa más claro para que se lea.
+        bg: "#0B2123", side: "#0E2729", card: "#112E30", card2: "#173B3D", ink: "#E3EFEE", muted: "#8DAFAD",
+        line: "#1E4547", input: "#0D2628", fill: "#11676A", accent: "#62BDB8", accent2: "#7CCAC5", onAccent: "#FFFFFF",
+        accentSoft: "rgba(17,103,106,.38)",
+        green: "#9ACD7E", greenSoft: "rgba(154,205,126,.13)", red: "#EE8A78", redSoft: "rgba(238,138,120,.14)",
+        amber: "#E2B661", amberSoft: "rgba(226,182,97,.14)",
       }
     : {
         bg: "#F2F4F3", side: "#FBFCFB", card: "#FFFFFF", card2: "#EEF2F1", ink: "#1E2B2F", muted: "#66767A",
-        line: "#DDE4E2", input: "#F8FAF9", accent: "#2E5E8C", accent2: "#3A6D9E", onAccent: "#FFFFFF",
+        line: "#DDE4E2", input: "#F8FAF9", fill: "#2E5E8C", accent: "#2E5E8C", accent2: "#3A6D9E", onAccent: "#FFFFFF",
         accentSoft: "#E5EDF5",
         green: "#2E8655", greenSoft: "#E3F1E8", red: "#BF4637", redSoft: "#F8E7E3",
         amber: "#A8731A", amberSoft: "#F6EDDA",
@@ -158,7 +159,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:${c.accent};bo
 button{font-family:inherit}
 .card{background:${c.card};border:1px solid ${c.line};border-radius:14px;padding:20px}
 .lbl{display:flex;flex-direction:column;gap:6px;font-size:12px;color:${c.muted};font-weight:500}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:${c.accent};color:${c.onAccent};border:1px solid ${c.accent};padding:9px 15px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:${c.fill};color:${c.onAccent};border:1px solid ${c.fill};padding:9px 15px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600;white-space:nowrap}
 .btn:hover{filter:brightness(1.06)}
 .btn:disabled{opacity:.6;cursor:default}
 .btn.ghost{background:transparent;color:${c.ink};border:1px solid ${c.line}}
@@ -279,7 +280,7 @@ function Auth() {
 function Logo({ c }) {
   return (
     <>
-      <div style={{ width: 32, height: 32, borderRadius: 8, background: c.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ width: 32, height: 32, borderRadius: 8, background: c.fill, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Wallet size={17} color={c.onAccent} />
       </div>
       <div style={{ fontWeight: 700, fontSize: 17, color: c.ink }}>Finanzas</div>
