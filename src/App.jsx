@@ -148,8 +148,11 @@ function tema(dark) {
 const css = (c) => `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 *{box-sizing:border-box}
-body{margin:0;background:${c.bg}}
-input,select,textarea{font-family:inherit;border:1px solid ${c.line};background:${c.input};border-radius:10px;padding:10px 12px;font-size:14px;color:${c.ink};width:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:${c.bg};overscroll-behavior-y:none}
+button,a,input,select,textarea,label{touch-action:manipulation}
+button{-webkit-tap-highlight-color:transparent}
+input,select,textarea{font-family:inherit;border:1px solid ${c.line};background:${c.input};border-radius:10px;padding:10px 12px;font-size:16px;color:${c.ink};width:100%;min-width:0}
 input:focus,select:focus,textarea:focus{outline:none;border-color:${c.accent};box-shadow:0 0 0 3px ${c.accentSoft}}
 button{font-family:inherit}
 .card{background:${c.card};border-radius:16px;padding:20px;box-shadow:${c.shadow}}
@@ -176,10 +179,10 @@ button{font-family:inherit}
 .spin{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .shell{display:grid;grid-template-columns:232px minmax(0,1fr) 340px;min-height:100vh}
 .sidebar{display:flex}
-.bottombar{display:none}
+.topbar{display:none}
 .solo-angosto{display:none}
 @media (max-width:1199px){.shell{grid-template-columns:232px minmax(0,1fr)}.rightpanel{display:none}.solo-angosto{display:inline-flex}}
-@media (max-width:899px){.shell{grid-template-columns:minmax(0,1fr)}.sidebar{display:none}.bottombar{display:flex}.main{padding:18px 16px 92px !important}.two-col{grid-template-columns:1fr !important}}
+@media (max-width:899px){.shell{grid-template-columns:minmax(0,1fr)}.sidebar{display:none}.topbar{display:flex}.main{padding:16px 16px calc(28px + env(safe-area-inset-bottom)) !important}.two-col{grid-template-columns:1fr !important}}
 @media (min-width:1200px){.drawer{display:none !important}}
 ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:${c.line};border-radius:4px}
 `;
@@ -473,6 +476,20 @@ function Finanzas({ user }) {
     <div style={{ minHeight: "100vh", background: c.bg, color: c.ink, fontFamily: "'Inter', sans-serif" }}>
       <style>{css(c)}</style>
 
+      {/* ── Barra superior móvil (arriba para que nada flotante la tape) ── */}
+      <nav className="topbar" style={{ position: "sticky", top: 0, zIndex: 30, background: c.side, borderBottom: `1px solid ${c.line}`, padding: "calc(6px + env(safe-area-inset-top)) 4px 6px", justifyContent: "space-around", boxShadow: c.shadow }}>
+        {NAV.map(({ key, label, icon: Icon }) => {
+          const on = tab === key;
+          return (
+            <button key={key} onClick={() => { setTab(key); window.scrollTo({ top: 0 }); }} aria-current={on ? "page" : undefined}
+              style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 3, background: on ? c.card2 : "none", border: "none", borderRadius: 10, color: on ? c.green : c.muted, fontSize: 10.5, cursor: "pointer", padding: "7px 2px", fontWeight: on ? 600 : 500, minWidth: 0 }}>
+              <Icon size={19} />
+              {label.split(" ")[0]}
+            </button>
+          );
+        })}
+      </nav>
+
       <div className="shell">
         {/* ── Sidebar ── */}
         <aside className="sidebar" style={{ flexDirection: "column", background: c.side, padding: "26px 16px", position: "sticky", top: 0, height: "100vh", borderRight: `1px solid ${c.line}` }}>
@@ -546,16 +563,6 @@ function Finanzas({ user }) {
           </div>
         </div>
       )}
-
-      {/* ── Barra inferior móvil ── */}
-      <nav className="bottombar" style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: c.side, borderTop: `1px solid ${c.line}`, padding: "8px 6px calc(8px + env(safe-area-inset-bottom))", justifyContent: "space-around", zIndex: 30 }}>
-        {NAV.map(({ key, label, icon: Icon }) => (
-          <button key={key} onClick={() => setTab(key)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, background: "none", border: "none", color: tab === key ? c.green : c.muted, fontSize: 10, cursor: "pointer", padding: "4px 6px", fontWeight: tab === key ? 600 : 500 }}>
-            <Icon size={19} />
-            {label.split(" ")[0]}
-          </button>
-        ))}
-      </nav>
 
       {/* ── Modales ── */}
       {modal && modal !== "importar" && (
